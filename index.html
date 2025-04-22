@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java Programs by Kumar Alok Anand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-light: #f0f2f5;
+      --bg-dark: #121212;
+      --card-bg-light: #fff;
+      --card-bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f0f0f0;
+      --primary: #4CAF50;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      margin: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    #controls {
+      text-align: center;
+      margin: 20px;
+    }
+
+    #searchBar {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      outline: none;
+    }
+
+    .toggle-btn {
+      margin-left: 15px;
+      padding: 10px 15px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .program-card {
+      background: linear-gradient(135deg, #ffffff, #f9f9f9);
+      padding: 18px;
+      width: 260px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    body.dark .program-card {
+      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .program-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .program-card a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .program-card a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 40px;
+      font-size: 15px;
+      position: relative;
+      bottom: 0;
+      width: 100%;}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Java Programs by Kumar Alok Anand</h1>
+  </header>
+
+  <div id="controls">
+    <input type="text" id="searchBar" placeholder="Search program..." />
+    <button class="toggle-btn" onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+
+  <main id="programList"></main>
+
+  <script>
+    const githubBase = "https://github.com/Kumar-Alok-Anand/java/blob/main/";
+
+    const programs = [
+      "ArmstrongNumber.java", "AverageArray.java", "CommonDivisors.java",
+      "CountDigitsInArray.java", "CountVowels.java", "DiagonalPatternMatrix.java",
+      "DigitCount.java", "Display2DArray.java", "Divisors.java", "EvenNumbers.java",
+      "EvenOddCount.java", "ExcludeMultiples.java", "Factorial.java", "Fibonacci.java",
+      "AnagramCheck.java", "Sum2DMatrix.java", "StarSquare.java", "IncreasingPattern.java",
+      "DecreasingPattern.java", "SumEven.java", "SumOdd.java", "SmallestElement.java",
+      "LargestElement.java", "CountPrimes.java", "CheckerboardPattern.java",
+      "ReverseFromN.java", "ZigZagPattern.java", "FibonacciWhile.java",
+      "HalfPyramid.java", "InvertedHalfPyramid.java", "PowerOfTwo.java",
+      "PalindromeNumber.java", "XPattern.java", "MaxProduct.java", "ReverseString.java",
+      "AlternatingStar.java", "DigitFrequency.java", "SumDigitsDivBy3.java",
+      "SpiralMatrix.java", "PosNegCount.java", "SumPositive2D.java", "PerfectSquares.java",
+      "CheckerboardNumbers.java", "SecondSmallest.java", "SumEvenIndexes.java",
+      "HourglassPattern.java", "FindPalindromes.java", "CountNonZeroDigits.java",
+      "RecursiveFibonacci.java", "Random2DArray.java", "MultiplicationMatrix.java",
+      "TrianglePattern.java", "CharacterFrequency.java"
+    ];
+
+    const programList = document.getElementById('programList');
+    const searchBar = document.getElementById('searchBar');
+
+    function displayPrograms(filter = "") {
+      programList.innerHTML = ""; // Clear previous list
+
+      const filtered = programs.filter(p =>
+        p.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        programList.innerHTML = "<p>No results found.</p>";
+        return;
+      }
+
+      filtered.forEach(file => {
+        const card = document.createElement('div');
+        card.className = 'program-card';
+
+        const link = document.createElement('a');
+        link.href = githubBase + file;
+        link.target = "_blank";
+        link.textContent = file.replace('.java', '');
+
+        card.appendChild(link);
+        programList.appendChild(card);
+      });
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+
+    searchBar.addEventListener("input", (e) => {
+      displayPrograms(e.target.value);
+    });
+
+    // Initial load
+    displayPrograms();
+  </script>
+  
+<footer>
+  <p>Created by <strong>Alok Kumar</strong></p>
+  <p>BTech Second Year (CSE)</p>
+</footer>
+
+
+</body>
+</html>
